@@ -20,4 +20,5 @@ func handle_input(event: InputEvent):
 		state_machine.change_state("Walk")
 	elif Input.is_action_just_pressed("Jump"):
 		state_machine.change_state("Jump")
-	pass
+	elif Input.is_action_pressed("Crouch"):
+		state_machine.change_state("Crouch")

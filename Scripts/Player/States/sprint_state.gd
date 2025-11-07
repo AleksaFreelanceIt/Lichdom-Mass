@@ -17,13 +17,15 @@ func physics_update(delta: float):
 	if direction ==0:
 		state_machine.change_state("Idle")
 		return
-	character.velocity.x = direction * 300
-	character.move_and_slide()
 	if character.velocity.y >0:
 		state_machine.change_state("Fall")
+	character.velocity.x = direction * 450
+	character.move_and_slide()
 
 func handle_input(event: InputEvent):
 	if Input.is_action_just_pressed("Jump"):
 		state_machine.change_state("Jump")
 	if Input.is_action_just_released("Sprint"):
 		state_machine.change_state("Walk")
+	if Input.is_action_pressed("Crouch"):
+		state_machine.change_state("Slide")

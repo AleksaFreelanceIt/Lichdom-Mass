@@ -1,8 +1,8 @@
 extends State
-class_name WalkState
+class_name CrouchWalkState
 
 func enter():
-	print("Entering Walk State")
+	print("Entering CrouchWalk State")
 
 func exit():
 	pass
@@ -15,17 +15,15 @@ func physics_update(delta: float):
 	var direction = Input.get_axis("Left","Right")
 	
 	if direction ==0:
-		state_machine.change_state("Idle")
+		state_machine.change_state("Crouch")
 		return
 	if character.velocity.y > 0:
 		state_machine.change_state("Fall")
-	character.velocity.x = direction * 300
+	character.velocity.x = direction * 100
 	character.move_and_slide()
 
 func handle_input(event: InputEvent):
 	if Input.is_action_just_pressed("Jump"):
 		state_machine.change_state("Jump")
-	elif Input.is_action_pressed("Sprint"):
-		state_machine.change_state("Sprint")
-	elif Input.is_action_pressed("Crouch"):
-		state_machine.change_state("CrouchMove")
+	elif Input.is_action_just_released("Crouch"):
+		state_machine.change_state("Walk")

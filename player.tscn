@@ -1,4 +1,4 @@
-[gd_scene load_steps=11 format=3 uid="uid://tq4sgd2xbedo"]
+[gd_scene load_steps=12 format=3 uid="uid://tq4sgd2xbedo"]
 
 [ext_resource type="Texture2D" uid="uid://btxhjird8s867" path="res://icon.svg" id="2_b26j0"]
 [ext_resource type="Script" uid="uid://dubtnxgs5s41s" path="res://Scripts/Player/States/state_machine.gd" id="2_dw050"]
@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://c8jmdk83drkt8" path="res://Scripts/Player/States/sprint_state.gd" id="5_ivps1"]
 [ext_resource type="Script" uid="uid://k84o7frcun0b" path="res://Scripts/Player/States/crouch_state.gd" id="6_urp6f"]
 [ext_resource type="Script" uid="uid://ccel1xbgx8e5a" path="res://Scripts/Player/States/slide_state.gd" id="7_bwjto"]
+[ext_resource type="Script" uid="uid://2qrisj5dtuxn" path="res://Scripts/Player/States/crouch_move_state.gd" id="7_n7ghd"]
 [ext_resource type="Script" uid="uid://cof1lqjn3hmli" path="res://Scripts/Player/States/jump_state.gd" id="8_606se"]
 [ext_resource type="Script" uid="uid://c52v0e7pfuu3a" path="res://Scripts/Player/States/fall_state.gd" id="9_b26j0"]
 
@@ -36,6 +37,9 @@ script = ExtResource("5_ivps1")
 
 [node name="Crouch" type="Node" parent="State Machine"]
 script = ExtResource("6_urp6f")
+
+[node name="CrouchMove" type="Node" parent="State Machine"]
+script = ExtResource("7_n7ghd")
 
 [node name="Slide" type="Node" parent="State Machine"]
 script = ExtResource("7_bwjto")

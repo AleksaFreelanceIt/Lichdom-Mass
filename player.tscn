@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://tq4sgd2xbedo"]
+[gd_scene load_steps=11 format=3 uid="uid://tq4sgd2xbedo"]
 
 [ext_resource type="Texture2D" uid="uid://btxhjird8s867" path="res://icon.svg" id="2_b26j0"]
 [ext_resource type="Script" uid="uid://dubtnxgs5s41s" path="res://Scripts/Player/States/state_machine.gd" id="2_dw050"]
@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://k84o7frcun0b" path="res://Scripts/Player/States/crouch_state.gd" id="6_urp6f"]
 [ext_resource type="Script" uid="uid://ccel1xbgx8e5a" path="res://Scripts/Player/States/slide_state.gd" id="7_bwjto"]
 [ext_resource type="Script" uid="uid://cof1lqjn3hmli" path="res://Scripts/Player/States/jump_state.gd" id="8_606se"]
+[ext_resource type="Script" uid="uid://c52v0e7pfuu3a" path="res://Scripts/Player/States/fall_state.gd" id="9_b26j0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u1c27"]
 size = Vector2(122, 120)
@@ -41,3 +42,6 @@ script = ExtResource("7_bwjto")
 
 [node name="Jump" type="Node" parent="State Machine"]
 script = ExtResource("8_606se")
+
+[node name="Fall" type="Node" parent="State Machine"]
+script = ExtResource("9_b26j0")

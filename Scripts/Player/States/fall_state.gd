@@ -1,10 +1,9 @@
 extends State
-class_name JumpState
+class_name FallState
 
 func enter():
-	print("Entering jump state")
+	print("Entering fall state")
 	var character = state_machine.get_parent()
-	character.velocity.y = -400
 
 func exit():
 	pass
@@ -16,9 +15,6 @@ func physics_update(delta: float):
 	var character = state_machine.get_parent()
 	
 	character.velocity.y += 900 * delta
-	
-	if character.velocity.y > 0:
-		state_machine.change_state("Fall")
 	
 	var direction = Input.get_axis("Left","Right")
 	character.velocity.x = direction * 200

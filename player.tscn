@@ -1,7 +1,7 @@
 [gd_scene load_steps=10 format=3 uid="uid://tq4sgd2xbedo"]
 
-[ext_resource type="Script" uid="uid://xhfsu3o1v0sr" path="res://Scripts/Player/Player.gd" id="1_dw050"]
 [ext_resource type="Texture2D" uid="uid://btxhjird8s867" path="res://icon.svg" id="2_b26j0"]
+[ext_resource type="Script" uid="uid://dubtnxgs5s41s" path="res://Scripts/Player/States/state_machine.gd" id="2_dw050"]
 [ext_resource type="Script" uid="uid://ckw1t5wbpvgf3" path="res://Scripts/Player/States/idle_state.gd" id="3_n7ghd"]
 [ext_resource type="Script" uid="uid://be2qj4ydshpf8" path="res://Scripts/Player/States/walk_state.gd" id="4_nvl01"]
 [ext_resource type="Script" uid="uid://c8jmdk83drkt8" path="res://Scripts/Player/States/sprint_state.gd" id="5_ivps1"]
@@ -13,7 +13,6 @@
 size = Vector2(122, 120)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
-script = ExtResource("1_dw050")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("RectangleShape2D_u1c27")
@@ -21,20 +20,24 @@ shape = SubResource("RectangleShape2D_u1c27")
 [node name="Sprite2D" type="Sprite2D" parent="."]
 texture = ExtResource("2_b26j0")
 
-[node name="Idle" type="Node" parent="."]
+[node name="State Machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
+script = ExtResource("2_dw050")
+initial_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="State Machine"]
 script = ExtResource("3_n7ghd")
 
-[node name="Walk" type="Node" parent="."]
+[node name="Walk" type="Node" parent="State Machine"]
 script = ExtResource("4_nvl01")
 
-[node name="Sprint" type="Node" parent="."]
+[node name="Sprint" type="Node" parent="State Machine"]
 script = ExtResource("5_ivps1")
 
-[node name="Crouch" type="Node" parent="."]
+[node name="Crouch" type="Node" parent="State Machine"]
 script = ExtResource("6_urp6f")
 
-[node name="Slide" type="Node" parent="."]
+[node name="Slide" type="Node" parent="State Machine"]
 script = ExtResource("7_bwjto")
 
-[node name="Jump" type="Node" parent="."]
+[node name="Jump" type="Node" parent="State Machine"]
 script = ExtResource("8_606se")

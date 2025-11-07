@@ -1,13 +1,25 @@
-extends PlayerState
+extends State
+class_name WalkState
 
-func handle_input(_delta):
-	var direction = Input.get_axis("Left","Right");
-	if direction != 0:
-		player.velocity.x = direction * player.SPEED;
-	else:
-		player.change_state("Idle");
-	if Input.is_action_just_pressed("Jump") and player.is_on_floor():
-		player.change_state("Jump");
-	elif Input.is_action_pressed("Crouch") and player.is_on_floor():
-		player.change_state("Crouch");
+func enter():
+	pass
+
+func exit():
+	pass
+
+func update(delta: float):
+	pass
+
+func physics_update(delta: float):
+	var character = state_machine.get_parent()
+	var direction = Input.get_axis("Left","Right")
 	
+	if direction ==0:
+		state_machine.change_state("Idle")
+		return
+	character.velocity.x = direction * 200
+	character.move_and_slide()
+
+func handle_input(event: InputEvent):
+	if Input.is_action_just_pressed("Jump"):
+		state_machine.change_state("Jump")

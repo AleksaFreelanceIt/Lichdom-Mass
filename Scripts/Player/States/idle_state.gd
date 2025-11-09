@@ -18,6 +18,8 @@ func physics_update(delta: float):
 func handle_input(event: InputEvent):
 	if Input.is_action_pressed("Left") or Input.is_action_pressed("Right"):
 		state_machine.change_state("Walk")
+		if Input.is_action_just_pressed("Sprint"):
+			state_machine.change_state("Sprint")
 	elif Input.is_action_just_pressed("Jump"):
 		state_machine.change_state("Jump")
 	elif Input.is_action_pressed("Crouch"):

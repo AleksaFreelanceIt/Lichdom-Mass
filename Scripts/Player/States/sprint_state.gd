@@ -1,6 +1,7 @@
 extends State
 class_name SprintState
 
+@export var sprint_speed: float = 300.0
 func enter():
 	print("Entering Sprint State")
 
@@ -19,7 +20,7 @@ func physics_update(delta: float):
 		return
 	if character.velocity.y >0:
 		state_machine.change_state("Fall")
-	character.velocity.x = direction * 450
+	character.velocity.x = direction * sprint_speed
 	character.move_and_slide()
 
 func handle_input(event: InputEvent):

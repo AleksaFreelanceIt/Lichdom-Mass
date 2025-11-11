@@ -1,6 +1,8 @@
 extends State
 class_name WalkState
 
+@export var walk_speed: float = 300.0
+
 func enter():
 	print("Entering Walk State")
 
@@ -19,7 +21,7 @@ func physics_update(delta: float):
 		return
 	if character.velocity.y > 0:
 		state_machine.change_state("Fall")
-	character.velocity.x = direction * 300
+	character.velocity.x = direction * walk_speed
 	character.move_and_slide()
 
 func handle_input(event: InputEvent):

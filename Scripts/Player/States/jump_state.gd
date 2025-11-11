@@ -1,10 +1,11 @@
 extends State
 class_name JumpState
 
+@export var jump_force: float = -400
 func enter():
 	print("Entering jump state")
 	var character = state_machine.get_parent()
-	character.velocity.y = -400
+	character.velocity.y = jump_force
 
 func exit():
 	pass
@@ -15,7 +16,7 @@ func update(delta: float):
 func physics_update(delta: float):
 	var character = state_machine.get_parent()
 	
-	character.velocity.y += 900 * delta
+	character.velocity.y += 90 * delta
 	
 	if character.velocity.y > 0:
 		state_machine.change_state("Fall")

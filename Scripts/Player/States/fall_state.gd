@@ -1,6 +1,8 @@
 extends State
 class_name FallState
 
+@export var fall_force: float = 900
+
 func enter():
 	print("Entering fall state")
 	var character = state_machine.get_parent()
@@ -14,7 +16,7 @@ func update(delta: float):
 func physics_update(delta: float):
 	var character = state_machine.get_parent()
 	
-	character.velocity.y += 900 * delta
+	character.velocity.y += fall_force * delta
 	
 	var direction = Input.get_axis("Left","Right")
 	character.velocity.x = direction * 200

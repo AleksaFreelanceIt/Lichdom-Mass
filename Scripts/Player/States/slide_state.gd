@@ -7,6 +7,7 @@ class_name SlideState
 func enter():
 	print("Entering slide state")
 	var character = state_machine.get_parent()
+	print(character.velocity.x)
 	if character.velocity.x > 0:
 		character.velocity.x = slide_initial_speed
 	else:
@@ -26,12 +27,12 @@ func physics_update(delta: float):
 		if character.velocity.x > slide_stop:
 			character.velocity.x -= 10
 		else:
-			state_machine.change_state("Sprint")
+			state_machine.change_state("Crouch")
 	else:
 		if character.velocity.x < -slide_stop:
 			character.velocity.x += 10
 		else:
-			state_machine.change_state("Sprint")
+			state_machine.change_state("Crouch")
 	
 	if character.velocity.y > 0:
 		state_machine.change_state("Fall")

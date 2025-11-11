@@ -1,6 +1,6 @@
 [gd_scene load_steps=12 format=3 uid="uid://tq4sgd2xbedo"]
 
-[ext_resource type="Texture2D" uid="uid://btxhjird8s867" path="res://icon.svg" id="2_b26j0"]
+[ext_resource type="Texture2D" uid="uid://du2oxajo1ghds" path="res://Sprites/Run/_Run.png" id="1_n7ghd"]
 [ext_resource type="Script" uid="uid://dubtnxgs5s41s" path="res://Scripts/Player/States/state_machine.gd" id="2_dw050"]
 [ext_resource type="Script" uid="uid://ckw1t5wbpvgf3" path="res://Scripts/Player/States/idle_state.gd" id="3_n7ghd"]
 [ext_resource type="Script" uid="uid://be2qj4ydshpf8" path="res://Scripts/Player/States/walk_state.gd" id="4_nvl01"]
@@ -12,15 +12,18 @@
 [ext_resource type="Script" uid="uid://c52v0e7pfuu3a" path="res://Scripts/Player/States/fall_state.gd" id="9_b26j0"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u1c27"]
-size = Vector2(122, 120)
+size = Vector2(17, 38)
 
 [node name="CharacterBody2D" type="CharacterBody2D"]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(-4.5, 22)
 shape = SubResource("RectangleShape2D_u1c27")
 
 [node name="Sprite2D" type="Sprite2D" parent="."]
-texture = ExtResource("2_b26j0")
+texture = ExtResource("1_n7ghd")
+hframes = 10
+frame = 7
 
 [node name="State_Machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_dw050")
@@ -31,9 +34,11 @@ script = ExtResource("3_n7ghd")
 
 [node name="Walk" type="Node" parent="State_Machine"]
 script = ExtResource("4_nvl01")
+walk_speed = 55.0
 
 [node name="Sprint" type="Node" parent="State_Machine"]
 script = ExtResource("5_ivps1")
+sprint_speed = 165.0
 
 [node name="Crouch" type="Node" parent="State_Machine"]
 script = ExtResource("6_urp6f")
@@ -47,18 +52,20 @@ slide_initial_speed = 1000.0
 
 [node name="Jump" type="Node" parent="State_Machine"]
 script = ExtResource("8_606se")
+jump_force = -100.0
 
 [node name="Fall" type="Node" parent="State_Machine"]
 script = ExtResource("9_b26j0")
+fall_force = 90.0
 
 [node name="Hang" type="Node" parent="State_Machine"]
 
 [node name="Climb" type="Node" parent="State_Machine"]
 
 [node name="ledge_grab_miss" type="RayCast2D" parent="."]
-position = Vector2(1, -72)
-target_position = Vector2(120, 0)
+position = Vector2(0, -3)
+target_position = Vector2(21, 0)
 
 [node name="ledge_grab_hit" type="RayCast2D" parent="."]
-position = Vector2(1, -11)
-target_position = Vector2(90, 0)
+position = Vector2(-4, 22)
+target_position = Vector2(16, 0)

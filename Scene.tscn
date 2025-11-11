@@ -6,8 +6,8 @@
 [node name="Node2D" type="Node2D"]
 
 [node name="StaticBody2D" parent="." instance=ExtResource("1_4cvuw")]
-position = Vector2(597, 529)
+position = Vector2(175, 182)
 scale = Vector2(0.600002, 1)
 
 [node name="CharacterBody2D" parent="." instance=ExtResource("2_j2eoc")]
-position = Vector2(585, 420)
+position = Vector2(163, 91)

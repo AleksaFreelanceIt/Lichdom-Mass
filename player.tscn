@@ -48,7 +48,9 @@ script = ExtResource("7_n7ghd")
 
 [node name="Slide" type="Node" parent="State_Machine"]
 script = ExtResource("7_bwjto")
-slide_initial_speed = 1000.0
+slide_initial_speed = 300.0
+slide_stop = 150.0
+slide_deceleration = 300.0
 
 [node name="Jump" type="Node" parent="State_Machine"]
 script = ExtResource("8_606se")

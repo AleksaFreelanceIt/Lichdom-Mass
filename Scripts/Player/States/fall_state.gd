@@ -6,6 +6,7 @@ class_name FallState
 func enter():
 	print("Entering fall state")
 	var character = state_machine.get_parent()
+	animation_player.play("JumptoFall")
 
 func exit():
 	pass
@@ -29,3 +30,7 @@ func physics_update(delta: float):
 			state_machine.change_state("Idle")
 func handle_input(event: InputEvent):
 	pass
+
+
+func _on_animated_sprite_2d_animation_finished() -> void:
+	animation_player.play("Fall")

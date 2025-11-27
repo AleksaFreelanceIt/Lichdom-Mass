@@ -1,6 +1,7 @@
 extends Node
 class_name State
 
+@export var animation_player: AnimatedSprite2D
 var state_machine: StateMachine
 
 func enter():

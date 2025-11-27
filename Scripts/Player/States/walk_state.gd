@@ -5,6 +5,7 @@ class_name WalkState
 
 func enter():
 	print("Entering Walk State")
+	animation_player.play("Walk")
 
 func exit():
 	pass

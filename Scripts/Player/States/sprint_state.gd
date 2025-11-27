@@ -4,6 +4,7 @@ class_name SprintState
 @export var sprint_speed: float = 300.0
 func enter():
 	print("Entering Sprint State")
+	animation_player.play("Run")
 
 func exit():
 	pass

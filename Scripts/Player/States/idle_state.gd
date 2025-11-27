@@ -3,6 +3,7 @@ class_name IdleState
 
 func enter():
 	print("Entering idle state")
+	animation_player.play("Idle")
 
 func exit():
 	pass

@@ -4,6 +4,7 @@ class_name JumpState
 @export var jump_force: float = -100
 @export var gravity: float = 500
 func enter():
+	super()
 	print("Entering jump state")
 	var character = state_machine.get_parent()
 	character.velocity.y = jump_force
@@ -24,6 +25,10 @@ func physics_update(delta: float):
 		state_machine.change_state("Fall")
 	
 	var direction = Input.get_axis("Left","Right")
+	if(direction == 1):
+		animation_player.flip_h = false
+	elif(direction == -1):
+		animation_player.flip_h = true;
 	character.velocity.x = direction * 200
 	
 	character.move_and_slide()

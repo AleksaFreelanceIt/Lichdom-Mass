@@ -2,6 +2,7 @@ extends State
 class_name IdleState
 
 func enter():
+	super()
 	print("Entering idle state")
 	animation_player.play("Idle")
 

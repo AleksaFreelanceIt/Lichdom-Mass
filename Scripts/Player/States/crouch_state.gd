@@ -2,6 +2,8 @@ extends State
 class_name CrouchState
 
 func enter():
+	super()
+	animation_player.play("Crouch")
 	print("Entering Crouch State")
 
 func exit():

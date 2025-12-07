@@ -2,6 +2,8 @@ extends State
 class_name FallState
 
 @export var fall_force: float = 900
+@export var WallCheck: ShapeCast2D
+@export var FloorCheck: RayCast2D
 
 func enter():
 	super()
@@ -28,6 +30,11 @@ func physics_update(delta: float):
 	character.velocity.x = direction * 200
 	
 	character.move_and_slide()
+	
+	if WallCheck.is_colliding() and not FloorCheck.is_colliding() and character.velocity.y ==0:
+		state_machine.change_state("Hang")
+		return
+		
 	if character.is_on_floor():
 		if direction != 0:
 			state_machine.change_state("Walk")

@@ -1,4 +1,4 @@
-[gd_scene load_steps=61 format=3 uid="uid://tq4sgd2xbedo"]
+[gd_scene load_steps=69 format=3 uid="uid://tq4sgd2xbedo"]
 
 [ext_resource type="Script" uid="uid://dbpqr8gcdea22" path="res://player.gd" id="1_606se"]
 [ext_resource type="Texture2D" uid="uid://du2oxajo1ghds" path="res://Sprites/Run/_Run.png" id="1_n7ghd"]
@@ -12,6 +12,7 @@
 [ext_resource type="Script" uid="uid://cof1lqjn3hmli" path="res://Scripts/Player/States/jump_state.gd" id="8_606se"]
 [ext_resource type="Script" uid="uid://c52v0e7pfuu3a" path="res://Scripts/Player/States/fall_state.gd" id="9_b26j0"]
 [ext_resource type="Texture2D" uid="uid://cpfrll5muv7tx" path="res://Sprites/Fall/_Fall.png" id="10_bwjto"]
+[ext_resource type="Script" uid="uid://dmhu1lyxtw03r" path="res://Scripts/Player/States/hang_state.gd" id="11_pylmc"]
 [ext_resource type="Texture2D" uid="uid://bthc1fhlys5x6" path="res://Sprites/Crouch/_Crouch.png" id="11_u1c27"]
 [ext_resource type="Texture2D" uid="uid://du4n2a4q5mvmt" path="res://Sprites/Jump/_Jump.png" id="12_606se"]
 [ext_resource type="Texture2D" uid="uid://bwpwpej3mkexm" path="res://Sprites/Crouch/_CrouchWalk.png" id="12_op7ga"]
@@ -20,7 +21,7 @@
 [ext_resource type="Texture2D" uid="uid://boacyo3t1qw2o" path="res://Sprites/Slide/_Slide.png" id="18_q13i1"]
 
 [sub_resource type="RectangleShape2D" id="RectangleShape2D_u1c27"]
-size = Vector2(17, 38)
+size = Vector2(13, 35)
 
 [sub_resource type="AtlasTexture" id="AtlasTexture_qwsg1"]
 atlas = ExtResource("12_op7ga")
@@ -181,6 +182,10 @@ region = Rect2(960, 0, 120, 80)
 [sub_resource type="AtlasTexture" id="AtlasTexture_3iwfv"]
 atlas = ExtResource("1_n7ghd")
 region = Rect2(1080, 0, 120, 80)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_pfmca"]
+atlas = ExtResource("14_op7ga")
+region = Rect2(0, 0, 120, 80)
 
 [sub_resource type="SpriteFrames" id="SpriteFrames_2wuci"]
 animations = [{
@@ -356,7 +361,72 @@ animations = [{
 "loop": true,
 "name": &"Walk",
 "speed": 5.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_pfmca")
+}],
+"loop": true,
+"name": &"WallHang",
+"speed": 5.0
 }]
+
+[sub_resource type="Animation" id="Animation_b4uyv"]
+resource_name = "Idle"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.966667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-3.5, 23.5), Vector2(-3.5, 23.5)]
+}
+
+[sub_resource type="Animation" id="Animation_q13i1"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(-1.5, 22)]
+}
+
+[sub_resource type="Animation" id="Animation_76oay"]
+resource_name = "WallHang"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("CollisionShape2D:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector2(-1.5, 22), Vector2(-1.5, 22)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_tw8ou"]
+_data = {
+&"Idle": SubResource("Animation_b4uyv"),
+&"RESET": SubResource("Animation_q13i1"),
+&"WallHang": SubResource("Animation_76oay")
+}
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_q13i1"]
+size = Vector2(18, 0)
+
+[sub_resource type="RectangleShape2D" id="RectangleShape2D_pylmc"]
 
 [node name="Player" type="CharacterBody2D"]
 script = ExtResource("1_606se")
@@ -369,33 +439,39 @@ slide_stop = 150.0
 slide_deceleration = 300.0
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
-position = Vector2(-4.5, 22)
+position = Vector2(-1.5, 22)
 shape = SubResource("RectangleShape2D_u1c27")
 
 [node name="State_Machine" type="Node" parent="." node_paths=PackedStringArray("initial_state")]
 script = ExtResource("2_dw050")
 initial_state = NodePath("Idle")
 
-[node name="Idle" type="Node" parent="State_Machine" node_paths=PackedStringArray("animation_player")]
+[node name="Idle" type="Node" parent="State_Machine" node_paths=PackedStringArray("floor_check", "animation_player")]
 script = ExtResource("3_n7ghd")
+floor_check = NodePath("../../FloorCheck")
 animation_player = NodePath("../../AnimatedSprite2D")
 
-[node name="Walk" type="Node" parent="State_Machine" node_paths=PackedStringArray("animation_player")]
+[node name="Walk" type="Node" parent="State_Machine" node_paths=PackedStringArray("floor_check", "animation_player")]
 script = ExtResource("4_nvl01")
+floor_check = NodePath("../../FloorCheck")
 animation_player = NodePath("../../AnimatedSprite2D")
 
 [node name="Sprint" type="Node" parent="State_Machine" node_paths=PackedStringArray("animation_player")]
 script = ExtResource("5_ivps1")
 animation_player = NodePath("../../AnimatedSprite2D")
 
-[node name="Jump" type="Node" parent="State_Machine" node_paths=PackedStringArray("animation_player")]
+[node name="Jump" type="Node" parent="State_Machine" node_paths=PackedStringArray("FloorCheck", "WallCheck", "animation_player")]
 script = ExtResource("8_606se")
 jump_force = -200.0
+FloorCheck = NodePath("../../FloorCheck")
+WallCheck = NodePath("../../WallCheck")
 animation_player = NodePath("../../AnimatedSprite2D")
 
-[node name="Fall" type="Node" parent="State_Machine" node_paths=PackedStringArray("animation_player")]
+[node name="Fall" type="Node" parent="State_Machine" node_paths=PackedStringArray("WallCheck", "FloorCheck", "animation_player")]
 script = ExtResource("9_b26j0")
 fall_force = 400.0
+WallCheck = NodePath("../../WallCheck")
+FloorCheck = NodePath("../../FloorCheck")
 animation_player = NodePath("../../AnimatedSprite2D")
 
 [node name="Crouch" type="Node" parent="State_Machine" node_paths=PackedStringArray("animation_player")]
@@ -410,14 +486,34 @@ animation_player = NodePath("../../AnimatedSprite2D")
 script = ExtResource("7_bwjto")
 animation_player = NodePath("../../AnimatedSprite2D")
 
-[node name="Hang" type="Node" parent="State_Machine"]
+[node name="Hang" type="Node" parent="State_Machine" node_paths=PackedStringArray("animation_player")]
+script = ExtResource("11_pylmc")
+animation_player = NodePath("../../AnimatedSprite2D")
 
 [node name="Climb" type="Node" parent="State_Machine"]
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(0, 1)
 sprite_frames = SubResource("SpriteFrames_2wuci")
-animation = &"Slide"
+animation = &"LedgeGrab"
 autoplay = "Idle"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_tw8ou")
+}
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="."]
+position = Vector2(-1, 7)
+shape = SubResource("RectangleShape2D_q13i1")
+
+[node name="WallCheck" type="ShapeCast2D" parent="."]
+position = Vector2(-1, 18)
+shape = SubResource("RectangleShape2D_pylmc")
+target_position = Vector2(0, 9)
+
+[node name="FloorCheck" type="RayCast2D" parent="."]
+position = Vector2(-7, 27)
+target_position = Vector2(0, 22)
 
 [connection signal="animation_finished" from="AnimatedSprite2D" to="State_Machine/Fall" method="_on_animated_sprite_2d_animation_finished"]

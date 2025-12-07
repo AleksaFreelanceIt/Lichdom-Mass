@@ -1,6 +1,8 @@
 extends State
 class_name WalkState
 
+@export var floor_check: RayCast2D
+
 func enter():
 	super()
 	print("Entering Walk State")
@@ -26,6 +28,8 @@ func physics_update(delta: float):
 		state_machine.change_state("Fall")
 	character.velocity.x = direction * player_node.walk_speed
 	character.move_and_slide()
+	if character.velocity.y >0 or !floor_check.is_colliding():
+		state_machine.change_state("Fall")
 
 func handle_input(event: InputEvent):
 	if Input.is_action_just_pressed("Jump"):

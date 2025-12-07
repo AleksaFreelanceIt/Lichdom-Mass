@@ -3,10 +3,14 @@ class_name JumpState
 
 @export var jump_force: float = -100
 @export var gravity: float = 500
+@export var FloorCheck: RayCast2D
+@export var WallCheck: ShapeCast2D
+var character
+
 func enter():
 	super()
 	print("Entering jump state")
-	var character = state_machine.get_parent()
+	character = state_machine.get_parent()
 	character.velocity.y = jump_force
 	animation_player.play("Jump")
 
@@ -17,10 +21,14 @@ func update(delta: float):
 	pass
 
 func physics_update(delta: float):
-	var character = state_machine.get_parent()
+	character = state_machine.get_parent()
 	print(character.velocity.y)
 	character.velocity.y += gravity*delta
-	
+
+	if WallCheck.is_colliding() and not FloorCheck.is_colliding() and character.velocity.y ==0:
+		state_machine.change_state("Hang")
+		return
+		
 	if character.velocity.y > 0:
 		state_machine.change_state("Fall")
 	
@@ -37,5 +45,6 @@ func physics_update(delta: float):
 			state_machine.change_state("Walk")
 		else:
 			state_machine.change_state("Idle")
+				
 func handle_input(event: InputEvent):
 	pass

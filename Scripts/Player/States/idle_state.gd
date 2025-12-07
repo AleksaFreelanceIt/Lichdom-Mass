@@ -1,6 +1,8 @@
 extends State
 class_name IdleState
 
+@export var floor_check: RayCast2D
+
 func enter():
 	super()
 	print("Entering idle state")
@@ -14,7 +16,7 @@ func update(delta: float):
 
 func physics_update(delta: float):
 	var character = state_machine.get_parent()
-	if character.velocity.y >0:
+	if character.velocity.y >0 or !floor_check.is_colliding():
 		state_machine.change_state("Fall")
 
 func handle_input(event: InputEvent):

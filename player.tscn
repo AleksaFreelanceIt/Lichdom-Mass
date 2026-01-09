@@ -469,7 +469,6 @@ animation_player = NodePath("../../AnimatedSprite2D")
 
 [node name="Fall" type="Node" parent="State_Machine" node_paths=PackedStringArray("WallCheck", "FloorCheck", "animation_player")]
 script = ExtResource("9_b26j0")
-fall_force = 400.0
 WallCheck = NodePath("../../WallCheck")
 FloorCheck = NodePath("../../FloorCheck")
 animation_player = NodePath("../../AnimatedSprite2D")
@@ -486,8 +485,9 @@ animation_player = NodePath("../../AnimatedSprite2D")
 script = ExtResource("7_bwjto")
 animation_player = NodePath("../../AnimatedSprite2D")
 
-[node name="Hang" type="Node" parent="State_Machine" node_paths=PackedStringArray("animation_player")]
+[node name="Hang" type="Node" parent="State_Machine" node_paths=PackedStringArray("hang_check", "animation_player")]
 script = ExtResource("11_pylmc")
+hang_check = NodePath("../../CollisionShape2D2")
 animation_player = NodePath("../../AnimatedSprite2D")
 
 [node name="Climb" type="Node" parent="State_Machine"]

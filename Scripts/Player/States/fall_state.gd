@@ -1,7 +1,6 @@
 extends State
 class_name FallState
 
-@export var fall_force: float = 900
 @export var WallCheck: ShapeCast2D
 @export var FloorCheck: RayCast2D
 
@@ -20,7 +19,7 @@ func update(delta: float):
 func physics_update(delta: float):
 	var character = state_machine.get_parent()
 	
-	character.velocity.y += fall_force * delta
+	character.velocity.y += character.fall_force * delta
 	
 	var direction = Input.get_axis("Left","Right")
 	if(direction == 1):

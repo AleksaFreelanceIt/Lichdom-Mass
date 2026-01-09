@@ -20,7 +20,8 @@ func physics_update(delta: float):
 	
 	# Usporenje
 	character.velocity.x = move_toward(character.velocity.x, player_node.slide_stop, player_node.slide_deceleration * delta)
-	
+	if !character.is_on_floor():
+			character.velocity.y += character.fall_force * delta
 	# Check for state transitions only when slide is complete
 	if abs(character.velocity.x) <= player_node.slide_stop:  # Small threshold
 		if character.is_on_floor():
@@ -31,8 +32,6 @@ func physics_update(delta: float):
 		else:
 			state_machine.change_state("Fall")
 	
-	# Handle falling during slide
-	if !character.is_on_floor() and character.velocity.y > 0:
-		state_machine.change_state("Fall")
+	
 	
 	character.move_and_slide()
